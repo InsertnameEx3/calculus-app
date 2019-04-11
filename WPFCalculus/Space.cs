@@ -15,7 +15,13 @@ namespace WPFCalculus
         public static dynamic ZMin { get; set; }
         public static dynamic ZMax { get; set; }
         public static dynamic Steps { get; set; }
-        
+        //Scales for x and y axis
+        public static dynamic XScale{ get; set; }
+        public static dynamic YScale{ get; set; }
+
+
+
+
 
         private static readonly Space _grid = new Space();
 

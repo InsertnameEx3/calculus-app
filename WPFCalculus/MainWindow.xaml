@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFCalculus"
         mc:Ignorable="d"
-        Title="MainWindow" Height="375.877" Width="845.331"
+        Title="MainWindow" Height="772.142" Width="1302.646"
         WindowState="Maximized">
     <Grid RenderTransformOrigin="0.5,0.5">
         <Grid.RenderTransform>
@@ -20,12 +20,24 @@
 
             <!-- Draws a diagonal line from (10,10) to (50,50). -->
 
-            <TextBox Height="30" Canvas.Left="10" TextWrapping="Wrap" Text="TextBox" Canvas.Top="63" Width="64" />
+            <TextBox Height="30" Canvas.Left="10" TextWrapping="Wrap" Text="TextBox" Canvas.Top="63" Width="89" />
             <TextBox Height="30" Canvas.Left="10" TextWrapping="Wrap" Text="TextBox" Canvas.Top="19" Width="169" />
-            <TextBox Height="30" Canvas.Left="115" TextWrapping="Wrap" Text="TextBox" Canvas.Top="63" Width="64"/>
-            <TextBox Height="30" Canvas.Left="10" TextWrapping="Wrap" Text="TextBox" Canvas.Top="113" Width="64"/>
-            <TextBox Height="30" Canvas.Left="115" TextWrapping="Wrap" Text="TextBox" Canvas.Top="113" Width="64"/>
-            <Canvas Name="Canvas" Background="#333333" Height="320" Canvas.Left="230" Canvas.Top="10" Width="600"/>
+            <TextBox Height="30" Canvas.Left="160" TextWrapping="Wrap" Text="TextBox" Canvas.Top="63" Width="84"/>
+            <TextBox Height="30" Canvas.Left="10" TextWrapping="Wrap" Text="TextBox" Canvas.Top="99" Width="86"/>
+            <TextBox Height="30" Canvas.Left="101" TextWrapping="Wrap" Text="&lt;= Y &lt;=" Canvas.Top="99" Width="54"/>
+
+            <Grid Background="LightGreen" Canvas.Left="379" Canvas.Top="10" Height="721" Width="906">
+                <Canvas Name="Grid" Background="White"
+                        Width="906" Height="721"
+                        VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Grid>
+
+            <TextBox Height="30" Canvas.Left="101" TextWrapping="Wrap" Text="&lt;= X &lt;=" Canvas.Top="63" Width="54" />
+            <TextBox Height="30" Canvas.Left="168" TextWrapping="Wrap" Text="TextBox" Canvas.Top="99" Width="86"/>
+
+
+
+
 
         </Canvas>
 

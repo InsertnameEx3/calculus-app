@@ -20,45 +20,228 @@ namespace WPFCalculus
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
+            //Fields that can be manipulated by the user fields
+            Space.XMin = -10;
+            Space.XMax = 10;
+            Space.YMin = -10;
+            Space.YMax = 10;
+            
+            Space.YScale = 1;
+            Space.XScale = 1;
+            Space.Steps = 1;
+            var formulass = new Formula("x");
+            var formulas = new Formula("x^2");
+
+            List<Formula> allFormulas = new List<Formula>();
+
+            allFormulas.Add(formulass);
+            allFormulas.Add(formulas);
+
+            try
+            {
+                Dictionary<dynamic, List<dynamic>> sDictionary = new Dictionary<dynamic, List<dynamic>>();
+                for (int i = 0; i < allFormulas[0].Coordinates.Count; i++)
+                {
+                    List<dynamic> YCoordinates = new List<dynamic>();
+
+                    for (var c = 0; c < allFormulas.Count; c++)
+                    {
+                        YCoordinates.Add(allFormulas[c].Coordinates.Values.ElementAt(i));
+                    }
+
+                    sDictionary.Add(allFormulas[0].Coordinates.Keys.ElementAt(i), YCoordinates);
+
+                }
+
+                for (int i = 0; i < sDictionary.Count; i++)
+                {
+                    sDictionary.Keys.ElementAt(i);
+                    Console.Write("X:  " + sDictionary.Keys.ElementAt(i) + "Y:  ");
+                    foreach (var coordinate in sDictionary.Values.ElementAt(i))
+                    {
+                        Console.Write(coordinate + " ");
+                    }
+
+                    Console.WriteLine();
+                }
+
+
+
+
+            }
+            catch { }
+
+            //Where is x=0 and y=0??
+           
+           
+
+
 
             InitializeComponent();
 
-            Space.XMin = -10;
-            Space.XMax = 10;
-            Space.Steps = 1;
 
-            Canvas.Children.Clear();
-            var formula = new Formula("x^2");
-            var formulas = new Formula("x");
-            var formulass = new Formula("0");
-            DrawLine(formula.Coordinates);
-            DrawLine(formulas.Coordinates);
-            DrawLine(formulass.Coordinates);
+            //Size of the small stripes each step
+            const double stripeSize = 3;
+            double xmin = 0;
+            double xmax = Grid.Width;
+            double ymin = Grid.Height;
+            double ymax = 0;
 
-            Dictionary<dynamic, List<dynamic>> sDictionary = new Dictionary<dynamic, List<dynamic>>();
-            for (int i = 0; i < formula.Coordinates.Count; i++)
+            int xDistance = ((Space.XMin < 0 && Space.XMax < 0) || (Space.XMin >= 0 && Space.XMax >= 0))
+                ? Space.XMin + Space.XMax
+                : (Space.XMin < 0)
+                    ? Space.XMin * -1 + Space.XMax
+                    : Space.XMax * -1 + Space.XMin;
+
+
+            int yDistance = ((Space.YMin < 0 && Space.YMax < 0) || (Space.YMin >= 0 && Space.YMax >= 0))
+                ? Space.YMin + Space.YMax
+                : (Space.YMin < 0)
+                    ? Space.YMin * -1 + Space.YMax
+                    : Space.YMax * -1 + Space.YMin;
+
+            double xStep = Grid.Width / (xDistance / Space.XScale);
+            double yStep = Grid.Height / (yDistance / Space.YScale);
+            var index = 0;
+            for (int i = Space.YMin; i < Space.YMax; i += Space.Steps)
             {
-                List<dynamic> YCoordinates = new List<dynamic>();
-                YCoordinates.Add(formula.Coordinates.Values.ElementAt(i));
-                YCoordinates.Add(formulas.Coordinates.Values.ElementAt(i));
-                YCoordinates.Add(formulass.Coordinates.Values.ElementAt(i));
                 
-                sDictionary.Add(formula.Coordinates.Keys.ElementAt(i),  YCoordinates);
-                ;
+                if (i == 0)
+                {
+                    ymin -= yStep * index;
+                    break;
+                }
+                index++;
             }
 
-            for (int i = 0; i < sDictionary.Count; i++)
+           
+
+
+            Console.WriteLine(ymin + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            //Check if x axis and y axis are in range (0, 0) => (x, y)  else change variable xaxis and yaxis to grid with numbers on side 
+            //Halve of the screen is either xmax/2 or ymax/2 or Grid.Width/2
+            // Make the X axis.
+            
+            
+            GeometryGroup xaxis_geom = new GeometryGroup();
+            xaxis_geom.Children.Add(new LineGeometry(
+                new Point(xmin, ymin), new Point(xmax, ymin)));
+            for (double x = xmin + xStep;
+                x <= Grid.Width;
+                x += xStep)
             {
-                sDictionary.Keys.ElementAt(i);
-                Console.Write("X:  " + sDictionary.Keys.ElementAt(i) + "Y:  ");
-                foreach (var coordinate in sDictionary.Values.ElementAt(i))
-                {
-                    Console.Write(coordinate + " ");
-                }
-                Console.WriteLine();
+                xaxis_geom.Children.Add(new LineGeometry(
+                    new Point(x, ymin - stripeSize),
+                    new Point(x, ymin + stripeSize)));
             }
+
+            Path xaxis_path = new Path();
+            xaxis_path.StrokeThickness = 1;
+            xaxis_path.Stroke = Brushes.Black;
+            xaxis_path.Data = xaxis_geom;
+
+            ymin = Grid.Height;
+
+
+            //Create xgrid
+            GeometryGroup xgrid_geom = new GeometryGroup();
+       
+            for (double x = xmin;
+                x <= xmax;
+                x += xStep)
+            {
+                xgrid_geom.Children.Add(new LineGeometry(
+                    new Point(x, ymax),
+                    new Point(x, ymin)));
+            }
+
+            Path xgrid_path = new Path();
+            xgrid_path.StrokeThickness = 1;
+            xgrid_path.Stroke = Brushes.Gray;
+            xgrid_path.Data = xgrid_geom;
+
+
+            
+
+
+            index = 0;
+            
+            for (int i = Space.XMin; i < Space.XMax; i += Space.Steps)
+            {
+                
+                if (i == 0)
+                {
+                    xmin += xStep * index;
+                    break;
+                }
+                index++;
+            }
+
+
+            Console.WriteLine(xmin + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+            
+            // Make the Y ayis.
+            GeometryGroup yaxis_geom = new GeometryGroup();
+            yaxis_geom.Children.Add(new LineGeometry(
+                new Point(xmin, ymin), new Point(xmin, ymax)));
+            for (double y = ymax; y <= ymin; y += yStep)
+            {
+                yaxis_geom.Children.Add(new LineGeometry(
+                    new Point(xmin - stripeSize, y),
+                    new Point(xmin + stripeSize, y)));
+            }
+
+            Path yaxis_path = new Path();
+            yaxis_path.StrokeThickness = 1;
+            yaxis_path.Stroke = Brushes.Black;
+            yaxis_path.Data = yaxis_geom;
+
+
+
+            xmin = 0;
+
+            // Make the Y ayis.
+            GeometryGroup ygrid_geom = new GeometryGroup();
+         
+            for (double y = ymax; y <= ymin; y += yStep)
+            {
+                ygrid_geom.Children.Add(new LineGeometry(new Point(xmax, y),new Point(xmin, y)));
+            }
+
+            Path ygrid_path = new Path();
+            ygrid_path.StrokeThickness = 1;
+            ygrid_path.Stroke = Brushes.Gray;
+            ygrid_path.Data = ygrid_geom;
+
+
+            
+
+            Grid.Children.Add(xgrid_path);
+            Grid.Children.Add(ygrid_path);
+            Grid.Children.Add(yaxis_path);
+            
+            Grid.Children.Add(xaxis_path);
+
+
+
+
+
+            try
+            {
+                DrawLines(allFormulas, xStep, yStep);
+            }
+            catch { }
+
+
+
+
+            //use array for formulas max:7? 9? 10?
+
+
 
             // Beautiful colours
             // #333333 
@@ -69,39 +252,78 @@ namespace WPFCalculus
             // 	#57B35A
         }
 
-        private void DrawLine(Dictionary<dynamic, dynamic> points)
+        void DrawLines(List<Formula> listOfFormulas, double xStep, double yStep)
         {
-            int i;
-            int count = points.Count;
-            for (i = 0; i < count - 1; i++)
+            
+            SolidColorBrush test = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ffaacc"));
+            
+
+            Brush[] brushes = { Brushes.Red, Brushes.Green, test };
+
+
+           
+
+
+
+            double xmin = 0;
+            double xmax = Grid.Width;
+            double ymin = 0;
+            double ymax = Grid.Height;
+            
+
+           
+
+            Console.WriteLine(listOfFormulas.Count);
+
+            
+            for (var i = 0; i < listOfFormulas.Count; i++)  //Foreach formula (shape)
             {
-                Line myline = new Line();
+               
+                double y = 0;
+                double x = 0;
+                GeometryGroup points = new GeometryGroup();
+                for (var p = 0; p < listOfFormulas[i].Coordinates.Count / Space.XScale; p++)   //Foreach coordinate draw a line of the shape
+                {
+                    y -= yStep;
+                    x += xStep;
+
+                    Console.WriteLine("FROM = (" + listOfFormulas[i].Coordinates.Keys.ElementAt(p) + ", " + listOfFormulas[i].Coordinates.Values.ElementAt(p) + ")");
+                    Console.WriteLine("TO = (" + listOfFormulas[i].Coordinates.Keys.ElementAt(p + 1) + ", "+ listOfFormulas[i].Coordinates.Values.ElementAt(p + 1) + ")");
+
+                    //Change to positive
+                    xmin = (Space.XMin < 0) ? Space.XMin * -1 : Space.XMin;
+                    ymin = (Space.YMin < 0) ? Space.YMin * -1 : Space.YMin;
+
+                    points.Children.Add(new LineGeometry(
+                        new Point(listOfFormulas[i].Coordinates.Keys.ElementAt(p) * (xStep * p) + (xmin * xStep),
+                            (listOfFormulas[i].Coordinates.Values.ElementAt(p) * (yStep * p)  + (ymin * yStep))),
+                        new Point(listOfFormulas[i].Coordinates.Keys.ElementAt(p+1) * (xStep * p) + (xmin * xStep),
+                            (listOfFormulas[i].Coordinates.Values.ElementAt(p+1) * (yStep * p)  + (ymin * yStep)))));
+
+
+
+
+                    Path xaxis_path = new Path();
+                    xaxis_path.StrokeThickness = 1;
+                    xaxis_path.Stroke = Brushes.Red;
+                    xaxis_path.Data = points;
+                    Grid.Children.Add(xaxis_path);
+
+
+
+                }
                 
-                myline.Stroke = Brushes.Red;
-                myline.StrokeThickness = 2;
-                Console.WriteLine("From (" + points.Keys.ElementAt(i) + ", " + points.Values.ElementAt(i) + ")");
-                myline.X1 = points.Keys.ElementAt(i);
-                myline.Y1 = points.Values.ElementAt(i);
-                Console.WriteLine("To (" + points.Keys.ElementAt(i+1) + ", " + points.Values.ElementAt(i+1) + ")");
-                myline.X2 = points.Keys.ElementAt(i + 1);
-                myline.Y2 = points.Values.ElementAt(i + 1);
-                Canvas.SetLeft(myline, myline.X1 + 300);
-                Canvas.SetTop(myline, myline.Y1 + 160);
-                Canvas.Children.Add(myline);
+
+
             }
+
         }
 
+
+
+    }
 
       
-            //var grid = new Space<int, int>();
-            
-        
-
-        }
-        //            foreach (var s in formula.TokenQueue)   
-            //            {
-            //                Console.WriteLine(s);
-            //            }
 
 
 
