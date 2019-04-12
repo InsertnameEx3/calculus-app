@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFCalculus"
         mc:Ignorable="d"
-        Title="MainWindow" Height="772.142" Width="1302.646"
+        Title="MainWindow" Height="902.142" Width="1675.525"
         WindowState="Maximized">
     <Grid RenderTransformOrigin="0.5,0.5">
         <Grid.RenderTransform>
@@ -19,21 +19,27 @@
         <Canvas Margin="0,0,10,10">
 
             <!-- Draws a diagonal line from (10,10) to (50,50). -->
+            <TextBox Height="218" Canvas.Left="45" TextWrapping="Wrap" Text="=&#xD;&#xA;&#xD;&#xA;=&#xD;&#xA;&#xD;&#xA;=&#xD;&#xA;&#xD;&#xA;=&#xD;&#xA;&#xD;&#xA;=&#xD;&#xA;&#xD;&#xA;=&#xD;&#xA;&#xD;&#xA;=" Canvas.Top="19" Width="199" TextChanged="FormulaChanged"/>
 
-            <TextBox Height="30" Canvas.Left="10" TextWrapping="Wrap" Text="TextBox" Canvas.Top="63" Width="89" />
-            <TextBox Height="30" Canvas.Left="10" TextWrapping="Wrap" Text="TextBox" Canvas.Top="19" Width="169" />
-            <TextBox Height="30" Canvas.Left="160" TextWrapping="Wrap" Text="TextBox" Canvas.Top="63" Width="84"/>
-            <TextBox Height="30" Canvas.Left="10" TextWrapping="Wrap" Text="TextBox" Canvas.Top="99" Width="86"/>
-            <TextBox Height="30" Canvas.Left="101" TextWrapping="Wrap" Text="&lt;= Y &lt;=" Canvas.Top="99" Width="54"/>
-
-            <Grid Background="LightGreen" Canvas.Left="379" Canvas.Top="10" Height="721" Width="906">
-                <Canvas Name="Grid" Background="White"
-                        Width="906" Height="721"
+            <TextBox Name="xMin" Height="30" Canvas.Left="10" TextWrapping="Wrap" Text="-10" Canvas.Top="256" Width="89" TextChanged="XMinTextChanged" />
+            <TextBox Name="xMax" Height="30" Canvas.Left="160" TextWrapping="Wrap" Text="10" Canvas.Top="256" Width="84" TextChanged="XMaxTextChanged"/>
+            <TextBox Name="yMin"  Height="30" Canvas.Left="10" TextWrapping="Wrap" Text="-10" Canvas.Top="292" Width="89" TextChanged="YMinTextChanged"/>
+            <TextBox Name="yMax" Height="30" Canvas.Left="160" TextWrapping="Wrap" Text="10" Canvas.Top="292" Width="84" TextChanged="YMaxTextChanged"/>
+            <Grid Background="LightGreen" Canvas.Left="270" Canvas.Top="10" Height="841" Width="1378">
+                <Canvas Name="Grid" Background="#333333"
+                        Width="1378" Height="841"
                         VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Grid>
 
-            <TextBox Height="30" Canvas.Left="101" TextWrapping="Wrap" Text="&lt;= X &lt;=" Canvas.Top="63" Width="54" />
-            <TextBox Height="30" Canvas.Left="168" TextWrapping="Wrap" Text="TextBox" Canvas.Top="99" Width="86"/>
+            <Label Content="&lt;= X &lt;=" Canvas.Left="101" Canvas.Top="257" Height="29"/>
+            <Label Content="&lt;= Y &lt;=" Canvas.Left="101" Canvas.Top="293" Height="29"/>
+            <Label Content="Y1" Canvas.Left="10" Canvas.Top="19" Height="29" Width="35"/>
+            <Label Content="Y2" Canvas.Left="10" Canvas.Top="48" Height="29" Width="35"/>
+            <Label Content="Y3" Canvas.Left="10" Canvas.Top="77" Height="29" Width="35"/>
+            <Label Content="Y4" Canvas.Left="10" Canvas.Top="111" Height="29" Width="35"/>
+            <Label Content="Y5" Canvas.Left="10" Canvas.Top="140" Height="29" Width="35"/>
+            <Label Content="Y6" Canvas.Left="10" Canvas.Top="174" Height="29" Width="35"/>
+            <Label Content="Y7" Canvas.Left="10" Canvas.Top="208" Height="29" Width="35"/>
 
 
 

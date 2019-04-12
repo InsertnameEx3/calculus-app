@@ -243,6 +243,20 @@ namespace WPFCalculus
 
 
 
+            
+        }
+
+        void DrawLines(List<Formula> listOfFormulas, double xStep, double yStep)
+        {
+            
+            SolidColorBrush test = (SolidColorBrush)(new BrushConverter().ConvertFrom("#DE8E26"));
+            SolidColorBrush test2 = (SolidColorBrush)(new BrushConverter().ConvertFrom("#7565C7"));
+            SolidColorBrush test3 = (SolidColorBrush)(new BrushConverter().ConvertFrom("#C9DFF1"));
+            SolidColorBrush test4 = (SolidColorBrush)(new BrushConverter().ConvertFrom("#B72224"));
+            SolidColorBrush test5 = (SolidColorBrush)(new BrushConverter().ConvertFrom("#57B35A"));
+
+            Brush[] brushes = { test, test2,test3,test4,test5 };
+
             // Beautiful colours
             // #333333 
             // 	#DE8E26
@@ -250,18 +264,7 @@ namespace WPFCalculus
             //#C9DFF1
             // 	#B72224
             // 	#57B35A
-        }
 
-        void DrawLines(List<Formula> listOfFormulas, double xStep, double yStep)
-        {
-            
-            SolidColorBrush test = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ffaacc"));
-            
-
-            Brush[] brushes = { Brushes.Red, Brushes.Green, test };
-
-
-           
 
 
 
@@ -297,15 +300,15 @@ namespace WPFCalculus
                     points.Children.Add(new LineGeometry(
                         new Point(listOfFormulas[i].Coordinates.Keys.ElementAt(p) * (xStep * p) + (xmin * xStep),
                             (listOfFormulas[i].Coordinates.Values.ElementAt(p) * (yStep * p)  + (ymin * yStep))),
-                        new Point(listOfFormulas[i].Coordinates.Keys.ElementAt(p+1) * (xStep * p) + (xmin * xStep),
-                            (listOfFormulas[i].Coordinates.Values.ElementAt(p+1) * (yStep * p)  + (ymin * yStep)))));
+                        new Point(listOfFormulas[i].Coordinates.Keys.ElementAt(p+1) * (xStep * (p + 1)) + (xmin * xStep),
+                            (listOfFormulas[i].Coordinates.Values.ElementAt(p+1) * (yStep * (p + 1))  + (ymin * yStep)))));
 
 
 
 
                     Path xaxis_path = new Path();
                     xaxis_path.StrokeThickness = 1;
-                    xaxis_path.Stroke = Brushes.Red;
+                    xaxis_path.Stroke = brushes[i];
                     xaxis_path.Data = points;
                     Grid.Children.Add(xaxis_path);
 
@@ -318,9 +321,26 @@ namespace WPFCalculus
             }
 
         }
-
-
-
+        private void FormulaChanged(object sender, TextChangedEventArgs e)
+        {
+            
+        }
+        private void XMinTextChanged(object sender, TextChangedEventArgs e)
+        {
+            Space.XMin = int.Parse(xMin.Text);
+        }
+        private void YMinTextChanged(object sender, TextChangedEventArgs e)
+        {
+            Space.YMin = int.Parse(yMin.Text);
+        }
+        private void XMaxTextChanged(object sender, TextChangedEventArgs e)
+        {
+            Space.XMax = int.Parse(xMax.Text);
+        }
+        private void YMaxTextChanged(object sender, TextChangedEventArgs e)
+        {
+            Space.YMax = int.Parse(yMax.Text);
+        }
     }
 
       
