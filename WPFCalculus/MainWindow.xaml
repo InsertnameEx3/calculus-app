@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFCalculus"
         mc:Ignorable="d"
-        Title="MainWindow" Height="902.142" Width="1675.525"
+        Title="MainWindow" Height="763.622" Width="1465.338"
         WindowState="Maximized">
     <Grid RenderTransformOrigin="0.5,0.5">
         <Grid.RenderTransform>
@@ -25,9 +25,9 @@
             <TextBox Name="xMax" Height="30" Canvas.Left="160" TextWrapping="Wrap" Text="10" Canvas.Top="256" Width="84" TextChanged="XMaxTextChanged"/>
             <TextBox Name="yMin"  Height="30" Canvas.Left="10" TextWrapping="Wrap" Text="-10" Canvas.Top="292" Width="89" TextChanged="YMinTextChanged"/>
             <TextBox Name="yMax" Height="30" Canvas.Left="160" TextWrapping="Wrap" Text="10" Canvas.Top="292" Width="84" TextChanged="YMaxTextChanged"/>
-            <Grid Background="LightGreen" Canvas.Left="270" Canvas.Top="10" Height="841" Width="1378">
-                <Canvas Name="Grid" Background="#333333"
-                        Width="1378" Height="841"
+            <Grid Background="LightGreen" Canvas.Left="270" Canvas.Top="10" Height="716" Width="716">
+                <Canvas Name="Grid" Background="White"
+                        Width="716" Height="716"
                         VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Grid>
 

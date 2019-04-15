@@ -24,15 +24,15 @@ namespace WPFCalculus
         public MainWindow()
         {
             //Fields that can be manipulated by the user fields
-            Space.XMin = -10;
-            Space.XMax = 10;
-            Space.YMin = -10;
-            Space.YMax = 10;
+            Space.XMin = -2;
+            Space.XMax = 2;
+            Space.YMin = -2;
+            Space.YMax = 2;
             
             Space.YScale = 1;
             Space.XScale = 1;
             Space.Steps = 1;
-            var formulass = new Formula("x");
+            var formulass = new Formula("x^3");
             var formulas = new Formula("x^2");
 
             List<Formula> allFormulas = new List<Formula>();
@@ -248,7 +248,15 @@ namespace WPFCalculus
 
         void DrawLines(List<Formula> listOfFormulas, double xStep, double yStep)
         {
-            
+            //Todo: better drawing
+            /*Todo: everything as a method 
+              Todo: nothing in the mainwindow.xaml.cs
+              Todo: Better front end
+              Todo: Regex update
+              Todo: table
+              Todo: change formula 1-10 !10 as formula size
+
+            */
             SolidColorBrush test = (SolidColorBrush)(new BrushConverter().ConvertFrom("#DE8E26"));
             SolidColorBrush test2 = (SolidColorBrush)(new BrushConverter().ConvertFrom("#7565C7"));
             SolidColorBrush test3 = (SolidColorBrush)(new BrushConverter().ConvertFrom("#C9DFF1"));
@@ -281,7 +289,7 @@ namespace WPFCalculus
             
             for (var i = 0; i < listOfFormulas.Count; i++)  //Foreach formula (shape)
             {
-               
+                var difference = listOfFormulas.Count;
                 double y = 0;
                 double x = 0;
                 GeometryGroup points = new GeometryGroup();
@@ -298,10 +306,10 @@ namespace WPFCalculus
                     ymin = (Space.YMin < 0) ? Space.YMin * -1 : Space.YMin;
 
                     points.Children.Add(new LineGeometry(
-                        new Point(listOfFormulas[i].Coordinates.Keys.ElementAt(p) * (xStep * p) + (xmin * xStep),
-                            (listOfFormulas[i].Coordinates.Values.ElementAt(p) * (yStep * p)  + (ymin * yStep))),
-                        new Point(listOfFormulas[i].Coordinates.Keys.ElementAt(p+1) * (xStep * (p + 1)) + (xmin * xStep),
-                            (listOfFormulas[i].Coordinates.Values.ElementAt(p+1) * (yStep * (p + 1))  + (ymin * yStep)))));
+                        new Point((listOfFormulas[i].Coordinates.Keys.ElementAt(p) + xmin) * xStep  ,
+                            ((listOfFormulas[i].Coordinates.Values.ElementAt(p) + ymin) * yStep)),
+                        new Point((listOfFormulas[i].Coordinates.Keys.ElementAt(p+1) + xmin) * xStep,
+                            ((listOfFormulas[i].Coordinates.Values.ElementAt(p+1) + ymin )* yStep))));
 
 
 
