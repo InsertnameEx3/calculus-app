@@ -15,11 +15,13 @@ using System.Windows.Shapes;
 
 namespace WPFCalculus
 {
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        //add DrawGrid method
 
         public MainWindow()
         {
@@ -90,6 +92,9 @@ namespace WPFCalculus
             double ymin = Grid.Height;
             double ymax = 0;
 
+
+
+
             int xDistance = ((Space.XMin < 0 && Space.XMax < 0) || (Space.XMin >= 0 && Space.XMax >= 0))
                 ? Space.XMin + Space.XMax
                 : (Space.XMin < 0)
@@ -120,7 +125,7 @@ namespace WPFCalculus
            
 
 
-            Console.WriteLine(ymin + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            
             //Check if x axis and y axis are in range (0, 0) => (x, y)  else change variable xaxis and yaxis to grid with numbers on side 
             //Halve of the screen is either xmax/2 or ymax/2 or Grid.Width/2
             // Make the X axis.
@@ -137,7 +142,7 @@ namespace WPFCalculus
                     new Point(x, ymin - stripeSize),
                     new Point(x, ymin + stripeSize)));
             }
-
+            
             Path xaxis_path = new Path();
             xaxis_path.StrokeThickness = 1;
             xaxis_path.Stroke = Brushes.Black;
@@ -181,9 +186,9 @@ namespace WPFCalculus
             }
 
 
-            Console.WriteLine(xmin + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
             
+
+
             // Make the Y ayis.
             GeometryGroup yaxis_geom = new GeometryGroup();
             yaxis_geom.Children.Add(new LineGeometry(
@@ -194,21 +199,25 @@ namespace WPFCalculus
                     new Point(xmin - stripeSize, y),
                     new Point(xmin + stripeSize, y)));
             }
-
+            
             Path yaxis_path = new Path();
             yaxis_path.StrokeThickness = 1;
             yaxis_path.Stroke = Brushes.Black;
             yaxis_path.Data = yaxis_geom;
 
-
+            
 
             xmin = 0;
 
-            // Make the Y ayis.
+            // Make the horizontal grid
             GeometryGroup ygrid_geom = new GeometryGroup();
          
             for (double y = ymax; y <= ymin; y += yStep)
             {
+                //if (y == xmin || y == (xmin + yStep))
+                //{
+                //    continue;
+                //}
                 ygrid_geom.Children.Add(new LineGeometry(new Point(xmax, y),new Point(xmin, y)));
             }
 
@@ -300,18 +309,21 @@ namespace WPFCalculus
                     y -= yStep;
                     x += xStep;
 
-                    Console.WriteLine("FROM = (" + listOfFormulas[i].Coordinates.Keys.ElementAt(p) + ", " + listOfFormulas[i].Coordinates.Values.ElementAt(p) + ")");
-                    Console.WriteLine("TO = (" + listOfFormulas[i].Coordinates.Keys.ElementAt(p + 1) + ", "+ listOfFormulas[i].Coordinates.Values.ElementAt(p + 1) + ")");
-
-                    //Change to positive
                     xmin = (Space.XMin < 0) ? Space.XMin * -1 : Space.XMin;
                     ymin = (Space.YMin < 0) ? Space.YMin * -1 : Space.YMin;
 
+                    Console.WriteLine("(" + (listOfFormulas[i].Coordinates.Keys.ElementAt(p) + xmin) * xStep +", "+
+                            ((listOfFormulas[i].Coordinates.Values.ElementAt(p) + ymin) * yStep)+")\n");
+
+                    Console.WriteLine("(" + (listOfFormulas[i].Coordinates.Keys.ElementAt(p+1) + xmin) * xStep + ", " +
+                            ((listOfFormulas[i].Coordinates.Values.ElementAt(p+1) + ymin) * yStep) + ")\n");
+                    //Change to positive
+
                     points.Children.Add(new LineGeometry(
                         new Point((listOfFormulas[i].Coordinates.Keys.ElementAt(p) + xmin) * xStep  ,
-                            ((listOfFormulas[i].Coordinates.Values.ElementAt(p) + ymin) * yStep)),
+                            (((listOfFormulas[i].Coordinates.Values.ElementAt(p) * -1) + ymin) * yStep)),
                         new Point((listOfFormulas[i].Coordinates.Keys.ElementAt(p+1) + xmin) * xStep,
-                            ((listOfFormulas[i].Coordinates.Values.ElementAt(p+1) + ymin )* yStep))));
+                            (((listOfFormulas[i].Coordinates.Values.ElementAt(p+1)*-1) + ymin ) * yStep))));
 
 
 
@@ -338,6 +350,7 @@ namespace WPFCalculus
         private void XMinTextChanged(object sender, TextChangedEventArgs e)
         {
             Space.XMin = int.Parse(xMin.Text);
+     
         }
         private void YMinTextChanged(object sender, TextChangedEventArgs e)
         {
