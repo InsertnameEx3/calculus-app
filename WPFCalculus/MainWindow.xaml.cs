@@ -24,16 +24,16 @@ namespace WPFCalculus
         public MainWindow()
         {
             //Fields that can be manipulated by the user fields
-            Space.XMin = -2;
-            Space.XMax = 2;
-            Space.YMin = -2;
-            Space.YMax = 2;
+            Space.XMin = -10;
+            Space.XMax = 10;
+            Space.YMin = -10;
+            Space.YMax = 10;
             
             Space.YScale = 1;
             Space.XScale = 1;
             Space.Steps = 1;
-            var formulass = new Formula("x^3");
-            var formulas = new Formula("x^2");
+            var formulass = new Formula("x^2");
+            var formulas = new Formula("x");
 
             List<Formula> allFormulas = new List<Formula>();
 
@@ -165,7 +165,7 @@ namespace WPFCalculus
 
 
             
-
+            
 
             index = 0;
             
@@ -248,22 +248,24 @@ namespace WPFCalculus
 
         void DrawLines(List<Formula> listOfFormulas, double xStep, double yStep)
         {
-            //Todo: better drawing
+            //
             /*Todo: everything as a method 
-              Todo: nothing in the mainwindow.xaml.cs
+              Todo: nothing in the mainwindow.xaml.cs aka cleaner code
               Todo: Better front end
               Todo: Regex update
               Todo: table
               Todo: change formula 1-10 !10 as formula size
+              Todo: add hoverable points for exact coordinates
+              Todo: movable canvas
 
             */
-            SolidColorBrush test = (SolidColorBrush)(new BrushConverter().ConvertFrom("#DE8E26"));
-            SolidColorBrush test2 = (SolidColorBrush)(new BrushConverter().ConvertFrom("#7565C7"));
-            SolidColorBrush test3 = (SolidColorBrush)(new BrushConverter().ConvertFrom("#C9DFF1"));
-            SolidColorBrush test4 = (SolidColorBrush)(new BrushConverter().ConvertFrom("#B72224"));
-            SolidColorBrush test5 = (SolidColorBrush)(new BrushConverter().ConvertFrom("#57B35A"));
+            SolidColorBrush gold = (SolidColorBrush)(new BrushConverter().ConvertFrom("#DE8E26"));
+            SolidColorBrush darkBlue = (SolidColorBrush)(new BrushConverter().ConvertFrom("#7565C7"));
+            SolidColorBrush lightBlue = (SolidColorBrush)(new BrushConverter().ConvertFrom("#C9DFF1"));
+            SolidColorBrush red = (SolidColorBrush)(new BrushConverter().ConvertFrom("#B72224"));
+            SolidColorBrush green = (SolidColorBrush)(new BrushConverter().ConvertFrom("#57B35A"));
 
-            Brush[] brushes = { test, test2,test3,test4,test5 };
+            Brush[] brushes = { red, green, lightBlue, darkBlue, gold };
 
             // Beautiful colours
             // #333333 
